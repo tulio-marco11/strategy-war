@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo</title>
+
+    <style>
+        canvas {
+            border: 05px solid blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="canvas" width="450" height="400">
+        Browser incompatível com canvas.
+    </canvas>
+
+</body>
+
+<script>
+let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+
+let fundo = new Image();
+    fundo.src = "assets/fundo.png";
+class flecha{
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
+        this.velocidade = 5;
+        this.imagem = new Image();
+        this.imagem.src = "assets/flecha.png";
+
+    }
+}
+class jogadorVermelho{
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
+        
+        this.imagem = new Image();
+        this.imagem.src = "assets/arqueirovermelho.png";
+    }
+}
+class jogadorAzul{
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
+        
+        this.imagem = new Image();
+        this.imagem.src = "assets/guerreiroazul.png";
+    }
+}
+
+    
+        let jogador = new jogadorVermelho(2, 290);
+        let jogador2 = new jogadorAzul(350, 290);
+        let flecha1 = new flecha(15, 305);
+        let flechativada = false;
+
+    canvas.addEventListener("click", function(event){
+        if(flechativada == false){
+            flechativada = true;
+        }
+        
+    });
+
+function main() {
+
+        ctx.clearRect(0, 0, 450, 400);
+        ctx.drawImage(fundo, 0, 0, 450, 400);
+        ctx.drawImage(jogador.imagem, jogador.x, jogador.y, 50, 70);
+        ctx.drawImage(jogador2.imagem, jogador2.x, jogador2.y, 50, 70);
+       jogador2.x -= 3;
+        if(flechativada == true){
+            ctx.drawImage(flecha1.imagem, flecha1.x, flecha1.y, 30, 32)
+            flecha1.x += flecha1.velocidade;
+            if(flecha1.x >= 450){
+               flechativada = false; 
+                flecha1.x = 2;
+            }
+            if(flecha1.x >= jogador2.x){
+                jogador2.x = 350;
+                flechativada = false;
+                flecha1.x =2;
+
+            }
+      
+        }
+        if(jogador2.x <=30){
+            alert("Você perdeu!");
+            jogador2.x = 350;
+        }
+        
+    }
+    setInterval(main, 16);
+ 
+
+</script>
+
+</html>
